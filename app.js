@@ -1,10 +1,5 @@
-var figlet = require("figlet");
-
-figlet("Hello World!!", function (err, data) {
-  if (err) {
-    console.log("Something went wrong...");
-    console.dir(err);
-    return;
-  }
-  console.log(data);
-});
+const fs = require("fs")
+fs.writeFile("out.txt", "ciao", (err) => {
+    if (err) throw(err)
+    console.log("write")
+})
