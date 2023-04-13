@@ -1,5 +1,24 @@
-const fs = require("fs")
-fs.writeFile("out.txt", "ciao", (err) => {
-    if (err) throw(err)
-    console.log("write")
-})
+function luckyDraw(player) {
+    return new Promise((resolve, reject) => {
+      const win = Boolean(Math.round(Math.random()));
+  
+      process.nextTick(() => {
+        if (win) {
+          resolve(`${player} won a prize in the draw!`);
+        } else {
+          reject(new Error(`${player} lost the draw.`));
+        }
+      });
+    });
+  }
+
+luckyDraw("Joe")
+  .then((res) => {
+    console.log(res)
+    return luckyDraw("Caroline")
+  })
+  .then((res) => {
+    console.log(res)
+    return luckyDraw("Sabrina")
+  })
+  .catch((err) => console.log(err))
