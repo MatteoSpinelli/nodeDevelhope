@@ -12,13 +12,15 @@ function luckyDraw(player) {
     });
   }
 
-luckyDraw("Joe")
-  .then((res) => {
-    console.log(res)
-    return luckyDraw("Caroline")
-  })
-  .then((res) => {
-    console.log(res)
-    return luckyDraw("Sabrina")
-  })
-  .catch((err) => console.log(err))
+async function agetResults(){
+    try{
+        for (player of ["Tina", "Jorge", "Julien"]){
+            const res = await luckyDraw(player)
+            console.log(res)
+        }
+
+    } catch (err){
+        console.error(err)
+    }
+}
+agetResults()
