@@ -1,5 +1,6 @@
 import dotenv from "dotenv"
 import express from "express"
+import pg from "pg-promise"
 import {
     getAll,
     getOneById,
@@ -9,6 +10,22 @@ import {
 } from "./controllers/planets.js"
 dotenv.config()
 
+const pgp = pg()
+export const db = pgp("postgres://postgres:dbAccess@localhost:5432/nodeDevelhope")
+const setupDatabase = async () => {
+    await db.none(`
+        DROP TABLE IF EXISTS planets;
+
+        CREATE TABLE planets(
+            id SERIAL NOT NULL PRIMARY KEY,
+            name TEXT NOT NULL
+        );
+    `)
+    await db.none("INSERT INTO planets (name) VALUES ('Earth')")
+    await db.none("INSERT INTO planets (name) VALUES ('Mars')")
+    await db.none("INSERT INTO planets (name) VALUES ('Jupiter')")
+}
+setupDatabase()
 
 const app = express()
 app.use(express.json())
