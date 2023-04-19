@@ -54,4 +54,9 @@ const deleteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     yield db.none("DELETE FROM planets WHERE id=$1", id);
     res.status(200).json({ msg: "planet deleted" });
 });
-export { getAll, getOneById, create, updateById, deleteById };
+const uploadImg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    yield db.none("UPDATE planets SET image=$2 WHERE id=$1", [id, req.file.filename]);
+    res.status(200).json({ msg: "image uploaded" });
+});
+export { getAll, getOneById, create, updateById, deleteById, uploadImg };

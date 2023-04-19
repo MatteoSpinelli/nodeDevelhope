@@ -57,11 +57,16 @@ const deleteById = async (req: Request, res: Response) => {
 
     res.status(200).json({ msg: "planet deleted" })
 }
-
+const uploadImg = async (req: any, res: Response) => {
+    const { id } = req.params
+    await db.none("UPDATE planets SET image=$2 WHERE id=$1", [id, req.file.filename])
+    res.status(200).json({ msg: "image uploaded" })
+}
 export {
     getAll,
     getOneById,
     create,
     updateById,
-    deleteById
+    deleteById,
+    uploadImg
 }
