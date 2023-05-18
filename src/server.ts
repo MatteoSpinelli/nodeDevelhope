@@ -14,6 +14,7 @@ import {
 import "./controllers/users.js";
 
 import dotenv from "dotenv";
+import { login, signup } from "./controllers/users.js";
 dotenv.config();
 
 const storage = multer.diskStorage({
@@ -39,6 +40,11 @@ app.use(express.json());
 // get the port from local environment file .env
 const { PORT } = process.env;
 
+// authentication routes
+app.post("/users/signup", signup);
+app.post("/users/login", login);
+
+// planet routes
 app.get("/api/planets", getAll);
 app.get("/api/planets/:id", getOneById);
 app.post("/api/planets", create);
