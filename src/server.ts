@@ -11,10 +11,12 @@ import {
   createImage,
 } from "./controllers/planets.js";
 
-import "./controllers/users.js";
-
 import dotenv from "dotenv";
-import { login, signup } from "./controllers/users.js";
+import { login, signup, logout } from "./controllers/users.js";
+
+import "./lib/passport.js";
+import authorize from "./middlewares/authorize.js";
+
 dotenv.config();
 
 const storage = multer.diskStorage({
@@ -43,6 +45,7 @@ const { PORT } = process.env;
 // authentication routes
 app.post("/users/signup", signup);
 app.post("/users/login", login);
+app.get("/users/logout", authorize, logout);
 
 // planet routes
 app.get("/api/planets", getAll);

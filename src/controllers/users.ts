@@ -56,4 +56,14 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-export { signup, login };
+const logout = async (req: Request, res: Response) => {
+  const user: any = req.user;
+  if (user) {
+    await db.none("UPDATE users SET token=NULL WHERE id=$1", [user.id]);
+    res.status(200).json({ msg: "Logged out succesfully." });
+  } else {
+    res.status(401).json({ msg: "you are not authenticated" });
+  }
+};
+
+export { signup, login, logout };
